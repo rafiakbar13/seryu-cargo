@@ -5,6 +5,7 @@ import Favorite from "./pages/Favorite";
 import Watchlist from "./pages/Watchlist";
 import Landing from "./pages/Landing";
 import Details from "./pages/Details";
+import SearchResult from "./pages/SearchResult";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/movie/:id",
         element: <Details />,
+      },
+      {
+        path: "/search/:query",
+        element: <SearchResult />,
       },
       {
         path: "/favorite",

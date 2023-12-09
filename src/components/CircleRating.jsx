@@ -11,12 +11,7 @@ const CircleRating = ({ rating }) => {
           maxValue={10}
           text={rating}
           styles={buildStyles({
-            pathColor:
-              rating < 5
-                ? "text-red-500"
-                : rating < 7
-                ? "text-orange-500"
-                : "text-green-500",
+            pathColor: rating < 5 ? "red" : rating < 7 ? "orange" : "blue",
             trailColor: "#d6d6d6",
           })}
           className="w-10 h-10"

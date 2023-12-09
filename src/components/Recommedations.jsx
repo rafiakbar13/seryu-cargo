@@ -5,7 +5,7 @@ import Carousel from "./Carousel";
 const Recommedations = ({ id }) => {
   const { data, loading } = useFetch(`/movie/${id}/recommendations`);
   return (
-    <section className="mt-10">
+    <section className="my-10">
       <article className="w-5/6 mx-auto">
         <Heading title="Recommendations" />
         <Carousel data={data?.results} loading={loading} />
