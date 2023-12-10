@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { MovieCard } from "./MovieCard";
+import noPoster from "../assets/no-poster.png";
 const Carousel = ({ data, loading }) => {
   const skeletonItem = () => <div className="w-52 h-80 skeleton"></div>;
 
@@ -19,26 +20,11 @@ const Carousel = ({ data, loading }) => {
                 : "";
 
               return (
-                <Link to={`/movie/${item.id}`}>
-                  <div
-                    className="flex-none w-52 mr-5 bg-[#050E12] rounded-lg"
-                    key={item.id}
-                  >
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                      alt={item.title}
-                      className="rounded-lg"
-                    />
-                    <div className="flex flex-col items-start px-3 py-5 overflow-hidden text-ellipsis">
-                      <h3 className="text-lg font-semibold truncate text-secondary">
-                        {item.title}
-                      </h3>
-                      <p className="text-tertiary font-normal text-[12px]">
-                        {releaseYear}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
+                <MovieCard
+                  item={item}
+                  noPoster={noPoster}
+                  releaseYear={releaseYear}
+                />
               );
             })}
           </div>

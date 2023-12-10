@@ -34,17 +34,17 @@ const Details = () => {
           <img
             src={`https://image.tmdb.org/t/p/original/${data?.backdrop_path}`}
             alt=""
-            className="w-full h-full bg-no-repeat bg-cover"
+            className="object-cover w-full h-full bg-no-repeat bg-cover"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         <div className="absolute w-5/6 p-8 space-y-8 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <div className="flex gap-x-4">
-            <div>
+            <div className="">
               <img
                 src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
                 alt=""
-                className="object-cover bg-no-repeat bg-cover rounded-md "
+                className="object-cover w-full h-full bg-no-repeat bg-cover rounded-md"
               />
             </div>
             <div className="pt-5 space-y-3">
@@ -100,40 +100,3 @@ const Details = () => {
 };
 
 export default Details;
-
-// {
-//   <div
-//     className="h-[600px] bg-no-repeat bg-cover bg-center"
-//     style={{
-//       backgroundImage: `https://image.tmdb.org/t/p/original/${data?.backdrop_path}`,
-//     }}
-//   >
-//     <div className="flex items-center justify-center w-full h-full bg-opacity-50">
-//       <div className="w-5/6 space-y-8 text-white">
-//         <h1 className="text-4xl font-poppins font-[900] tracking-[10px] sm:tracking-[20px] uppercase">
-//           {data.original_title}
-//         </h1>
-//         <div className="flex items-center space-x-4">
-//           <p className="text-xl font-roboto">
-//             {data.vote_average} <span className="text-sm">/10</span>
-//           </p>
-//           <p className="text-xl font-roboto">{data.release_date}</p>
-//         </div>
-//         <p className="text-xl font-roboto">{data.overview}</p>
-//       </div>
-//     </div>
-//   </div>;
-// }
-
-{
-  /* <h1 className="text-4xl font-poppins font-[900] tracking-[10px] sm:tracking-[20px] uppercase">
-            {data.original_title}
-          </h1>
-          <div className="flex items-center space-x-4">
-            <p className="text-xl font-roboto">
-              {data.vote_average} <span className="text-sm">/10</span>
-            </p>
-            <p className="text-xl font-roboto">{data.release_date}</p>
-          </div>
-          <p className="text-xl font-roboto">{data.overview}</p> */
-}

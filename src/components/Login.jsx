@@ -1,47 +1,37 @@
 import React, { useState } from "react";
 import { getRequestToken, getAccessToken } from "../utils/api";
 import tmdbImg from "../assets/tmdb.png";
-const Login = ({ closeLoginPopup, onLogin, onLogout }) => {
+
+const Login = ({ closeLoginPopup, onLogin }) => {
   const [requestToken, setRequestToken] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [accountId, setAccountId] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const token = import.meta.env.VITE_APP_TMDB_TOKEN;
   const webHost = import.meta.env.VITE_APP_WEBHOST;
+
   const getRequestTokenHandler = async () => {
     try {
-      const response = await getRequestToken(`${token}`);
+      const response = await getRequestToken(token);
       console.log(response);
       if (response.success) {
         setRequestToken(response.request_token);
-
-        // eslint-disable-next-line no-undef
         window.open(
           `${webHost}/auth/access?request_token=${response.request_token}`
         );
       }
     } catch (error) {
-      // Handle error if needed
       console.error(error);
     }
   };
 
   const getAccessTokenHandler = async () => {
     try {
-      const response = await getAccessToken(`${token}`, requestToken);
-
+      const response = await getAccessToken(token, requestToken);
       if (response.access_token) {
-        setAccessToken(response.access_token);
-        setAccountId(response.account_id);
         setIsLoggedIn(true);
-
-        // Close the modal when logged in
         closeLoginPopup();
-
         onLogin(true);
       }
     } catch (error) {
-      // Handle error if needed
       console.error(error);
     }
   };
@@ -56,7 +46,9 @@ const Login = ({ closeLoginPopup, onLogin, onLogout }) => {
           Request Token
         </button>
         <button
-          className="flex flex-col items-center justify-center disabled:opacity-50"
+          className={`flex flex-col items-center justify-center ${
+            !requestToken && "opacity-50"
+          }`}
           onClick={getAccessTokenHandler}
           disabled={!requestToken}
         >

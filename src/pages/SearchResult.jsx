@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { fetchDataFromApi } from "../utils/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import noPoster from "../assets/no-poster.png";
+import { MovieCard } from "../components/MovieCard";
 
 const SearchResult = () => {
   const [data, setData] = useState(null);
@@ -69,27 +70,11 @@ const SearchResult = () => {
                     ? new Date(item.release_date).getFullYear()
                     : "";
                   return (
-                    <Link to={`/movie/${item.id}`} key={item.id}>
-                      <div className="bg-[#050E12] rounded-lg overflow-hidden">
-                        <img
-                          src={
-                            item.poster_path
-                              ? `https://image.tmdb.org/t/p/w500/${item.poster_path}`
-                              : noPoster
-                          }
-                          alt={item.title}
-                          className="w-full rounded-lg"
-                        />
-                        <div className="p-4">
-                          <h3 className="text-lg font-semibold truncate text-secondary">
-                            {item.title}
-                          </h3>
-                          <p className="text-tertiary font-normal text-[12px]">
-                            {releaseYear}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
+                    <MovieCard
+                      item={item}
+                      noPoster={noPoster}
+                      releaseYear={releaseYear}
+                    />
                   );
                 })}
               </InfiniteScroll>

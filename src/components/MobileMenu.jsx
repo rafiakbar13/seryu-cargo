@@ -18,7 +18,9 @@ const MobileMenu = ({
           <NavLink
             to="/favorite"
             className={({ isActive }) =>
-              isActive ? " font-semibold border-b-2 border-red-500" : ""
+              isActive
+                ? " font-semibold border-b-2 border-red-500 text-xl font-roboto "
+                : "text-xl font-semibold font-roboto"
             }
             onClick={(event) => {
               if (!isLoggedIn) {
@@ -32,7 +34,9 @@ const MobileMenu = ({
           <NavLink
             to={"/watchlist"}
             className={({ isActive }) =>
-              isActive ? " font-semibold border-b-2 border-red-500" : ""
+              isActive
+                ? " font-semibold border-b-2 border-red-500 text-xl font-roboto"
+                : "text-xl font-semibold font-roboto"
             }
             onClick={(event) => {
               if (!isLoggedIn) {
