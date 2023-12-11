@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import Loading from "../components/Loading";
 import { Outlet } from "react-router-dom";
 const HomeLayout = () => {
   return (

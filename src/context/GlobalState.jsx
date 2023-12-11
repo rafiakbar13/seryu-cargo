@@ -195,7 +195,6 @@ export const GlobalContextProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         handleToggleMenu,
-        sessionId: state.sessionId,
       }}
     >
       {children}
