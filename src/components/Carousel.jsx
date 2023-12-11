@@ -24,6 +24,7 @@ const Carousel = ({ data, loading }) => {
                   item={item}
                   noPoster={noPoster}
                   releaseYear={releaseYear}
+                  key={item.id}
                 />
               );
             })}

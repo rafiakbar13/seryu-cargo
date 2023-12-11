@@ -1,7 +1,6 @@
 import React from "react";
 import Heading from "../../components/Heading";
 import useFetch from "../../hooks/useFetch";
-import { Link, useParams } from "react-router-dom";
 import noPoster from "../../assets/no-poster.png";
 import { MovieCard } from "../../components/MovieCard";
 const TopRated = () => {
@@ -28,6 +27,7 @@ const TopRated = () => {
                     item={item}
                     noPoster={noPoster}
                     releaseYear={releaseYear}
+                    key={item.id}
                   />
                 );
               })}

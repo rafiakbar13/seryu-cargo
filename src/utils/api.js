@@ -4,7 +4,9 @@ const BASE_URL = import.meta.env.VITE_TMDB_BASEURL_V3;
 const TMDB_TOKEN = import.meta.env.VITE_APP_TMDB_TOKEN;
 const apiKey = import.meta.env.VITE_API_KEY;
 const BASE_URLV4 = import.meta.env.VITE_APP_BASE_URL_V4;
+const BASE_URLV3 = import.meta.env.VITE_TMDB_BASEURL_V3;
 const token = import.meta.env.VITE_APP_TMDB_TOKEN;
+const accountId = import.meta.env.VITE_APP_ACCOUNT_ID;
 
 const headers = {
   Authorization: `Bearer ${TMDB_TOKEN}`,
@@ -59,12 +61,73 @@ export const getAccessToken = async (token, requestToken) => {
   }
 };
 
-export const loginWithSessionId = async (sessionId) => {
+export const loginWithSessionId = async (token, accessToken) => {
   try {
     const response = await axios.post(
-      `${BASE_URLV4}/auth/session`,
+      `${BASE_URLV3}/authentication/session/convert/4`,
       {
-        session_id: sessionId,
+        access_token: accessToken,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const Logout = async (token, sessionId) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URLV3}/authentication/session`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          session_id: sessionId,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const addFavorites = async (accountId, mediaId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URLV3}/account/${accountId}/favorite?api_key=${apiKey}`,
+      {
+        media_type: "movie",
+        media_id: mediaId,
+        favorite: true,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
+  }
+};
+
+export const AddWatchList = async (accountId, mediaId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URLV3}/account/${accountId}/watchlist?api_key=${apiKey}`,
+      {
+        media_type: "movie",
+        media_id: mediaId,
+        watchlist: true,
       },
       {
         headers: {

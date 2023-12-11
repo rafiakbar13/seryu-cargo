@@ -7,7 +7,7 @@ import { FaRegBookmark, FaRegHeart } from "react-icons/fa";
 const Details = () => {
   const { id } = useParams();
   const { data, loading } = useFetch(`/movie/${id}`);
-  console.log(data);
+  console.log("Details", data);
   if (!data) {
     return null;
   }
@@ -30,7 +30,7 @@ const Details = () => {
   return (
     <section>
       <article className="relative">
-        <div className="h-[500px]">
+        <div className="h-[700px] md:h-[500px]">
           <img
             src={`https://image.tmdb.org/t/p/original/${data?.backdrop_path}`}
             alt=""
@@ -38,17 +38,17 @@ const Details = () => {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-        <div className="absolute w-5/6 p-8 space-y-8 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-          <div className="flex gap-x-4">
-            <div className="">
+        <div className="absolute w-5/6 p-8 space-y-8 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
+          <div className="flex flex-col md:flex-row gap-x-2 sm:gap-x-4">
+            <div className="flex-shrink-0">
               <img
-                src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
+                src={`https://image.tmdb.org/t/p/original/${data?.poster_path}`}
                 alt=""
-                className="object-cover w-full h-full bg-no-repeat bg-cover rounded-md"
+                className="object-contain  h-full rounded-md w-36 sm:w-48 md:max-w-[240px]"
               />
             </div>
             <div className="pt-5 space-y-3">
-              <h1 className="text-4xl font-bold uppercase font-poppins">
+              <h1 className="text-lg font-bold uppercase md:text-4xl font-poppins">
                 {data.original_title} ({releaseYear})
               </h1>
               {/* infor */}

@@ -1,48 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import { IoClose } from "react-icons/io5";
 import useIsMobile from "../hooks/useIsMobile";
 import MobileMenu from "./MobileMenu";
 import SearchInput from "./SearchInput";
-
+import { GlobalContext } from "../context/GlobalState";
 const Navbar = () => {
-  const [loginPopup, setLoginPopup] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const navigate = useNavigate();
+  const {
+    isLoggedIn,
+    handleLogout,
+    handleLogin,
+    openLoginPopup,
+    closeLoginPopup,
+    toggleMenu,
+    loginPopup,
+    handleToggleMenu,
+  } = useContext(GlobalContext);
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    const statusLogin = localStorage.getItem("isLoggedIn");
-    if (statusLogin) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const openLoginPopup = () => {
-    setLoginPopup(true);
-  };
-
-  const closeLoginPopup = () => {
-    setLoginPopup(false);
-  };
-
-  const handleLogin = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
-    closeLoginPopup();
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
-    navigate("/");
-  };
-
-  const handleToggleMenu = () => {
-    setToggleMenu(!toggleMenu);
-  };
 
   return (
     <nav className="p-6 text-white bg-primary">
@@ -133,11 +108,7 @@ const Navbar = () => {
       {loginPopup && (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
           <div className="relative p-8 bg-white rounded-md">
-            <Login
-              closeLoginPopup={closeLoginPopup}
-              onLogin={handleLogin}
-              onLogout={handleLogout}
-            />
+            <Login onLogin={handleLogin} onLogout={handleLogout} />
             <button
               onClick={closeLoginPopup}
               className="absolute top-0 mt-4 text-lg text-black right-3"
