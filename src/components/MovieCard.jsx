@@ -5,11 +5,36 @@ import { IoMdBookmark, IoIosHeart } from "react-icons/io";
 import { GlobalContext } from "../context/GlobalState";
 
 export function MovieCard({ item, noPoster, releaseYear }) {
-  const { addMovieToFavorites, favorites, addMovieToWatchList, watchList } =
-    useContext(GlobalContext);
+  const {
+    addMovieToFavorites,
+    favorites,
+    addMovieToWatchList,
+    watchList,
+    removeMovieFromWatchList,
+    removeMovieFromFavorites,
+  } = useContext(GlobalContext);
 
   const isFavorite = favorites.some((favorite) => favorite.id === item.id);
   const isWatch = watchList.some((watch) => watch.id === item.id);
+
+  const handleBookmarkClick = (e) => {
+    e.preventDefault();
+    if (isWatch) {
+      removeMovieFromWatchList(item.id);
+    } else {
+      addMovieToWatchList(item);
+    }
+  };
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    if (isFavorite) {
+      removeMovieFromFavorites(item.id);
+    } else {
+      addMovieToFavorites(item);
+    }
+  };
+
   return (
     <section>
       <Link to={`/movie/${item.id}`} key={item.id}>
@@ -25,12 +50,7 @@ export function MovieCard({ item, noPoster, releaseYear }) {
           />
           <div className="absolute p-4 transition-opacity duration-300 opacity-0 right-2 bottom-20 group-hover:opacity-100">
             {/* Bookmark Icon */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addMovieToWatchList(item);
-              }}
-            >
+            <button onClick={handleBookmarkClick}>
               {isWatch ? (
                 <IoMdBookmark className="inline-block w-6 h-6 text-white" />
               ) : (
@@ -38,12 +58,7 @@ export function MovieCard({ item, noPoster, releaseYear }) {
               )}
             </button>
             {/* Heart Icon */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addMovieToFavorites(item);
-              }}
-            >
+            <button onClick={handleFavoriteClick}>
               {isFavorite ? (
                 <IoIosHeart className="inline-block w-6 h-6 ml-2 text-white" />
               ) : (

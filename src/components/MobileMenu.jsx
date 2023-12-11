@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
+const MobileMenu = () => {
+  const { isLoggedIn, openLoginPopup, toggleMenu, handleLogout } =
+    useContext(GlobalContext);
 
-const MobileMenu = ({
-  handleLogout,
-  isLoggedIn,
-  toggleMenu,
-  openLoginPopup,
-}) => {
   return (
     <nav
-      className={`fixed flex top-0 left-0 w-full p-10 z-10 h-40 mt-20 bg-primary text-white bg-opacity-100 transform delay-100 transition-all duration-300  ${
+      className={`fixed flex top-0 left-0 w-full p-10 z-10 h-48 mt-20 bg-primary text-white bg-opacity-100 transform delay-100 transition-all duration-300  ${
         toggleMenu ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
       }`}
     >

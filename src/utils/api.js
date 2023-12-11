@@ -1,6 +1,5 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_TMDB_BASEURL_V3;
 const TMDB_TOKEN = import.meta.env.VITE_APP_TMDB_TOKEN;
 const apiKey = import.meta.env.VITE_API_KEY;
 const BASE_URLV4 = import.meta.env.VITE_APP_BASE_URL_V4;
@@ -14,7 +13,7 @@ const headers = {
 
 export const fetchDataFromApi = async (url, params) => {
   try {
-    const { data } = await axios.get(BASE_URL + url, {
+    const { data } = await axios.get(BASE_URLV3 + url, {
       headers,
       params,
     });

@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import { AppReducer } from "./AppReducer";
+import { useHref } from "react-router-dom";
 import {
   getRequestToken,
   getAccessToken,
@@ -8,6 +9,7 @@ import {
   addFavorites,
   AddWatchList,
 } from "../utils/api";
+
 const token = import.meta.env.VITE_APP_TMDB_TOKEN;
 const webHost = import.meta.env.VITE_APP_WEBHOST;
 const initialState = {
@@ -29,6 +31,7 @@ export const GlobalContext = createContext(initialState);
 
 export const GlobalContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
   useEffect(() => {
     try {
       localStorage.setItem("watchList", JSON.stringify(state.watchList));
@@ -45,8 +48,16 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }, [state.favorites]);
 
-  const addMovieToWatchlist = (movie) => {
-    dispatch({ type: "ADD_MOVIE_TO_WATCH_LIST", payload: movie });
+  const addMovieToWatchList = async (movie) => {
+    try {
+      const response = await AddWatchList("movie", movie.id);
+      console.log(response);
+      if (response.success) {
+        dispatch({ type: "ADD_MOVIE_TO_WATCH_LIST", payload: movie });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const removeMovieFromWatchList = (id) => {
@@ -65,16 +76,8 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
-  const addMovieToWatchList = async (movie) => {
-    try {
-      const response = await AddWatchList("movie", movie.id);
-      console.log(response);
-      if (response.success) {
-        dispatch({ type: "ADD_MOVIE_TO_WATCH_LIST", payload: movie });
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const removeMovieFromFavorites = (id) => {
+    dispatch({ type: "REMOVE_MOVIE_FROM_FAVORITES", payload: id });
   };
 
   const getRequestTokenHandler = async () => {
@@ -155,7 +158,6 @@ export const GlobalContextProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
     dispatch({
       type: "SET_IS_LOGGED_IN",
       payload: false,
@@ -174,10 +176,10 @@ export const GlobalContextProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         watchList: state.watchList,
-        addMovieToWatchlist,
+        addMovieToWatchList,
         removeMovieFromWatchList,
         addMovieToFavorites,
-        addMovieToWatchList,
+        removeMovieFromFavorites,
         favorites: state.favorites,
         isLoggedIn: state.isLoggedIn,
         accessToken: state.accessToken,
@@ -193,6 +195,7 @@ export const GlobalContextProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         handleToggleMenu,
+        sessionId: state.sessionId,
       }}
     >
       {children}

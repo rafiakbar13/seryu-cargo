@@ -1,21 +1,15 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Loading from "../components/Loading";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 const HomeLayout = () => {
-  const navigation = useNavigation();
-  const isPageLoading = navigation.state === "loading";
   return (
-    <>
+    <section className="bg-black max-w-7xl mx-auto">
       <Navbar />
-      {isPageLoading ? (
-        <Loading />
-      ) : (
-        <section className="">
-          <Outlet />
-        </section>
-      )}
-    </>
+      <main className="">
+        <Outlet />
+      </main>
+    </section>
   );
 };
 

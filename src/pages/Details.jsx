@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import Recommedations from "../components/Recommedations";
 import CircleRating from "../components/CircleRating";
 import { FaRegBookmark, FaRegHeart } from "react-icons/fa";
+import { IoMdBookmark, IoIosHeart } from "react-icons/io";
+import { GlobalContext } from "../context/GlobalState";
 const Details = () => {
   const { id } = useParams();
   const { data, loading } = useFetch(`/movie/${id}`);
-  console.log("Details", data);
   if (!data) {
     return null;
   }
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  const {
+    addMovieToFavorites,
+    favorites,
+    addMovieToWatchList,
+    watchList,
+    removeMovieFromWatchList,
+    removeMovieFromFavorites,
+  } = useContext(GlobalContext);
+
+  const isFavorite = favorites.some((favorite) => favorite.id === data.id);
+  const isWatch = watchList.some((watch) => watch.id === data.id);
   const genres = data.genres.map((item) => item.name).join(", ");
 
+  // convert minutes to hours
   const toHoursAndMinutes = (totalMinutes) => {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -27,6 +39,25 @@ const Details = () => {
   const releaseYear = data.release_date
     ? new Date(data.release_date).getFullYear()
     : "";
+
+  const handleBookmarkClick = (e) => {
+    e.preventDefault();
+    if (isWatch) {
+      removeMovieFromWatchList(data.id);
+    } else {
+      addMovieToWatchList(data);
+    }
+  };
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    if (isFavorite) {
+      removeMovieFromFavorites(data.id);
+    } else {
+      addMovieToFavorites(data);
+    }
+  };
+
   return (
     <section>
       <article className="relative">
@@ -74,8 +105,22 @@ const Details = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-x-3">
-                  <FaRegBookmark className="text-2xl" />
-                  <FaRegHeart className="text-2xl" />
+                  {/* Bookmark Icon */}
+                  <button onClick={handleBookmarkClick}>
+                    {isWatch ? (
+                      <IoMdBookmark className="inline-block w-6 h-6 text-white " />
+                    ) : (
+                      <FaRegBookmark className="inline-block w-6 h-6 text-white " />
+                    )}
+                  </button>
+                  {/* Heart Icon */}
+                  <button onClick={handleFavoriteClick}>
+                    {isFavorite ? (
+                      <IoIosHeart className="inline-block w-6 h-6 ml-2 text-white " />
+                    ) : (
+                      <FaRegHeart className="inline-block w-6 h-6 ml-2 text-white" />
+                    )}
+                  </button>
                 </div>
               </div>
               {/* Overview */}

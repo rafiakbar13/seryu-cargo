@@ -6,6 +6,7 @@ import Watchlist from "./pages/Watchlist";
 import Landing from "./pages/Landing";
 import Details from "./pages/Details";
 import SearchResult from "./pages/SearchResult";
+import { GlobalContextProvider } from "./context/GlobalState";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,22 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/favorite",
         element: <Favorite />,
-        children: [
-          {
-            path: ":id",
-            element: <Details />,
-          },
-        ],
       },
       {
         path: "/watchlist",
         element: <Watchlist />,
-        children: [
-          {
-            path: ":id",
-            element: <Details />,
-          },
-        ],
       },
     ],
   },
@@ -50,7 +39,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
-      <RouterProvider router={router} />
+      <GlobalContextProvider>
+        <RouterProvider router={router} />
+      </GlobalContextProvider>
     </>
   );
 };
