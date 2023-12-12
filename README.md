@@ -14,6 +14,7 @@ https://seryu-cargo-9iy3gguiv-rafiakbar13.vercel.app/
 - Login And Logout
 - Search Movie
 - Add Favorites and Watchlist Movie
+- Remove Favorites and Watchlist Movie
 
 ## Run Locally
 
