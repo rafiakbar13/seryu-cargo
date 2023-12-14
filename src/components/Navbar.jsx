@@ -20,7 +20,7 @@ const Navbar = () => {
   const isMobile = useIsMobile();
 
   return (
-    <nav className="p-6 text-white bg-primary">
+    <nav className="fixed top-0 left-0 right-0 z-20 p-6 text-white bg-primary">
       <div className="flex items-center justify-between w-5/6 mx-auto">
         {/* Cinema */}
         <Link to="/">
