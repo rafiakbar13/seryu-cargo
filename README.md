@@ -7,7 +7,7 @@
 
 ## Demo
 
-https://seryu-cargo-9iy3gguiv-rafiakbar13.vercel.app/
+https://seryu-cargo.vercel.app/
 
 ## Features
 
